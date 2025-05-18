@@ -7,18 +7,21 @@ This document outlines the architectural principles and guidelines for this proj
 The project is structured into the following layers (from top to bottom):
 
 ### App Layer (`src/app/`)
+
 - Application initialization and setup
 - Global providers and configurations
 - Routing configuration
 - Root component
 
 **Responsibilities:**
+
 - Initialize the application
 - Set up global providers (theme, store, etc.)
 - Configure routing
 - Handle global error boundaries
 
 **Example:**
+
 ```typescript
 // src/app/App.tsx
 export const App = () => {
@@ -39,22 +42,25 @@ export const App = () => {
 ```
 
 ### Pages Layer (`src/pages/`)
+
 - Route-specific components
 - Page layouts
 - Page-level state management
 
 **Responsibilities:**
+
 - Define page layouts
 - Compose widgets and features
 - Handle page-level state
 - Manage route-specific logic
 
 **Example:**
-```typescript
-// src/pages/HomePage/index.ts
-export { HomePage } from './HomePage';
 
-// src/pages/HomePage/HomePage.tsx
+```typescript
+// src/pages/home-page/index.ts
+export { HomePage } from './home-page';
+
+// src/pages/home-page/home-page.tsx
 export const HomePage = () => {
   return (
     <Layout>
@@ -66,21 +72,24 @@ export const HomePage = () => {
 ```
 
 ### Widgets Layer (`src/widgets/`)
+
 - Complex UI components
 - Independent blocks of interface
 - Composite components
 
 **Responsibilities:**
+
 - Create reusable UI blocks
 - Manage widget-specific state
 - Compose features and entities
 
 **Example:**
-```typescript
-// src/widgets/Header/index.ts
-export { Header } from './ui/Header';
 
-// src/widgets/Header/ui/Header.tsx
+```typescript
+// src/widgets/header/index.ts
+export { Header } from './ui/header';
+
+// src/widgets/header/ui/header.tsx
 export const Header = () => {
   return (
     <header>
@@ -93,22 +102,25 @@ export const Header = () => {
 ```
 
 ### Features Layer (`src/features/`)
+
 - User interactions
 - Business actions
 - Feature-specific logic
 
 **Responsibilities:**
+
 - Implement user interactions
 - Handle feature-specific state
 - Manage feature business logic
 
 **Example:**
+
 ```typescript
-// src/features/ToggleTheme/index.ts
-export { ToggleTheme } from './ui/ToggleTheme';
+// src/features/toggle-theme/index.ts
+export { ToggleTheme } from './ui/toggle-theme';
 export { useTheme } from './model/useTheme';
 
-// src/features/ToggleTheme/ui/ToggleTheme.tsx
+// src/features/toggle-theme/ui/toggle-theme.tsx
 export const ToggleTheme = () => {
   const { theme, toggleTheme } = useTheme();
   return <Button onClick={toggleTheme}>Toggle Theme</Button>;
@@ -116,19 +128,22 @@ export const ToggleTheme = () => {
 ```
 
 ### Entities Layer (`src/entities/`)
+
 - Business entities
 - Entity-specific logic
 - Entity state management
 
 **Responsibilities:**
+
 - Define business entities
 - Manage entity state
 - Handle entity-specific logic
 
 **Example:**
+
 ```typescript
-// src/entities/User/index.ts
-export { UserCard } from './ui/UserCard';
+// src/entities/user/index.ts
+export { UserCard } from './ui/user-card';
 export { useUserStore } from './model/store';
 
 // src/entities/User/model/store.ts
@@ -139,34 +154,41 @@ export const useUserStore = create((set) => ({
 ```
 
 ### Shared Layer (`src/shared/`)
+
 - Reusable code
 - UI components
 - Utilities
 - API configuration
 
 **Responsibilities:**
+
 - Provide reusable components
 - Define utility functions
 - Configure API clients
 - Set up global styles
 
 **Example:**
+
 ```typescript
-// src/shared/ui/Button/index.ts
-export { Button } from './Button';
+// src/shared/ui/button/index.ts
+export { Button } from './button';
 
 // src/shared/api/base.ts
-export const api = axios.create({/* config */});
+export const api = axios.create({
+  /* config */
+});
 ```
 
 ## Import Rules
 
 1. **Vertical Imports:**
+
    - Higher layers can import from lower layers
    - Lower layers cannot import from higher layers
    - Same layer imports are allowed
 
 2. **Public API:**
+
    - Each module must expose its public API through `index.ts`
    - Internal implementation details should not be imported directly
 
@@ -177,6 +199,7 @@ export const api = axios.create({/* config */});
 ## State Management
 
 1. **Global State:**
+
    - Use Zustand for global state
    - Define stores in the appropriate layer
    - Keep state as close to its usage as possible
@@ -188,6 +211,7 @@ export const api = axios.create({/* config */});
 ## Error Handling
 
 1. **Global Errors:**
+
    - Use error boundaries at the app layer
    - Log errors to a monitoring service
 
@@ -199,11 +223,13 @@ export const api = axios.create({/* config */});
 ## Testing Strategy
 
 1. **Unit Tests:**
+
    - Test entities and features in isolation
    - Mock dependencies
    - Focus on business logic
 
 2. **Integration Tests:**
+
    - Test widget compositions
    - Verify feature interactions
    - Check state management
@@ -216,6 +242,7 @@ export const api = axios.create({/* config */});
 ## Code Style
 
 1. **Naming Conventions:**
+
    - Use PascalCase for components
    - Use camelCase for functions and variables
    - Use kebab-case for file names
@@ -228,11 +255,13 @@ export const api = axios.create({/* config */});
 ## Best Practices
 
 1. **Component Design:**
+
    - Keep components small and focused
    - Use composition over inheritance
    - Follow single responsibility principle
 
 2. **State Management:**
+
    - Keep state as local as possible
    - Use derived state when appropriate
    - Avoid prop drilling
@@ -257,4 +286,4 @@ When adding new features or refactoring existing code:
 - [Feature-Sliced Design Documentation](https://feature-sliced.github.io/documentation/)
 - [React Documentation](https://react.dev/)
 - [Zustand Documentation](https://github.com/pmndrs/zustand)
-- [TypeScript Documentation](https://www.typescriptlang.org/) 
+- [TypeScript Documentation](https://www.typescriptlang.org/)
