@@ -12,18 +12,21 @@ export default function MessageList({ messages }: MessageListProps) {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [heightContainer, setHeightContainer] = useState(0);
-
+  const [followOutput, setFollowOutput] = useState<
+    'smooth' | 'auto' | undefined
+  >();
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
       const heightContainer = container.offsetHeight;
       setHeightContainer(heightContainer);
     }
+    setFollowOutput('smooth');
   }, []);
 
   useEffect(() => {
     virtuosoRef.current?.scrollIntoView({
-      index: messages.length,
+      index: messages.length - 1,
       behavior: 'smooth',
     });
   }, [messages.length]);
@@ -43,6 +46,7 @@ export default function MessageList({ messages }: MessageListProps) {
             <MessageItem message={message} />
           </motion.div>
         )}
+        followOutput={followOutput}
         computeItemKey={(_, message) => message.id}
       />
     </div>
