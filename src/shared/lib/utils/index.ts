@@ -1,8 +1,10 @@
-type ClassValue = string | number | boolean | undefined | null;
+import { clsx } from 'clsx';
+import type { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-export const cn = (...classes: ClassValue[]) => {
-  return classes.filter(Boolean).join(' ');
-};
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export const formatDate = (date: string | Date) => {
   return new Intl.DateTimeFormat('en-US', {
