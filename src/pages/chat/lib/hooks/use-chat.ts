@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { getRandomBotReply } from '../utils/get-random-bot-reply';
 import { Message, MessageSender, MessageType } from '../../model/message';
+import { encryptData, decryptData } from '../utils/encryption';
 
 const STORAGE_KEY = 'chat_messages';
 
@@ -11,11 +12,19 @@ export function useChat() {
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) setMessages(JSON.parse(stored));
+    if (stored) {
+      const decryptedData = decryptData(stored);
+      if (decryptedData) {
+        setMessages(decryptedData);
+      }
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    const encryptedData = encryptData(messages);
+    if (encryptedData) {
+      localStorage.setItem(STORAGE_KEY, encryptedData);
+    }
   }, [messages]);
 
   const handleSendMessage = useCallback(

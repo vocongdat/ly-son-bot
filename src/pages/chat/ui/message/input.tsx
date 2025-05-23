@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
-import { Image as ImageIcon, Send as SendIcon } from 'lucide-react';
+import { Image as ImageIcon, Send as SendIcon, MapPin } from 'lucide-react';
 import { MessageSender, MessageType } from '../../model/message';
 import { useAction } from '../../lib/hooks/use-action';
 import { ImagePreviewModal } from '../modal/image-preview';
@@ -24,6 +24,7 @@ export default function MessageInput({ onSend }: Props) {
     setText,
     handleSend,
     handleKeyDown,
+    handleSendLocation,
     handleImageChange,
     handleCancelPreview,
   } = useAction({ onSend });
@@ -60,6 +61,14 @@ export default function MessageInput({ onSend }: Props) {
         rightIcon={<SendIcon className="size-5" />}
       >
         Gửi
+      </Button>
+      <Button
+        onClick={handleSendLocation}
+        variant="secondary"
+        className="whitespace-nowrap"
+        rightIcon={<MapPin className="size-5" />}
+      >
+        Gửi vị trí
       </Button>
       {!isSendDisabled && (
         <ImagePreviewModal
