@@ -6,6 +6,7 @@ export enum MessageSender {
 export enum MessageType {
   Text = 'text',
   Image = 'image',
+  Location = 'location',
 }
 
 export interface Message {

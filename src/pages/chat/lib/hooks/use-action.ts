@@ -58,6 +58,29 @@ export function useAction({ onSend }: UseActionParams) {
     }
   };
 
+  const handleSendLocation = () => {
+    if (!navigator.geolocation) {
+      toast.error('Trình duyệt của bạn không hỗ trợ định vị');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const locationUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        onSend({
+          sender: MessageSender.User,
+          type: MessageType.Text,
+          content: locationUrl,
+        });
+      },
+      (error) => {
+        toast.error('Không thể lấy vị trí của bạn');
+        console.error('Error getting location:', error);
+      }
+    );
+  };
+
   const handleCancelPreview = () => {
     setImage(null);
     setIsPreviewOpen(false);
@@ -76,5 +99,6 @@ export function useAction({ onSend }: UseActionParams) {
     handleKeyDown,
     handleImageChange,
     handleCancelPreview,
+    handleSendLocation,
   };
 }
