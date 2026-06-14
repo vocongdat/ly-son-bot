@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FSD React Template</title>
+    <meta
+      name="description"
+      content="Lý Sơn Bot — trợ lý du lịch thông minh giúp bạn khám phá đảo Lý Sơn: bãi biển, cánh đồng tỏi, miệng núi lửa và hành trình ra đảo."
+    />
+    <meta name="theme-color" content="#06b6d4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#083144" media="(prefers-color-scheme: dark)" />
+    <preconnect rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Lý Sơn Bot · Trợ lý du lịch đảo Lý Sơn</title>
+    <script>
+      // Apply persisted theme before first paint to avoid flash
+      (function () {
+        try {
+          var stored = localStorage.getItem('lyson-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored ? stored === 'dark' : prefersDark;
+          document.documentElement.classList.toggle('dark', isDark);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

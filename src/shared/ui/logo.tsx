@@ -1,0 +1,49 @@
+import { cn } from '@/shared/lib/utils';
+
+interface LogoProps {
+  className?: string;
+  title?: string;
+}
+
+/** Lý Sơn brand mark — sun rising over the volcanic island and ocean waves. */
+export function Logo({ className, title = 'Lý Sơn Bot' }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      fill="none"
+      role="img"
+      aria-label={title}
+      className={cn('size-10', className)}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="lysonBg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#1fcaee" />
+          <stop offset="0.55" stopColor="#078bb2" />
+          <stop offset="1" stopColor="#0d6f90" />
+        </linearGradient>
+        <linearGradient id="lysonSun" x1="32" y1="14" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#ffd9a0" />
+          <stop offset="1" stopColor="#ff6336" />
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="16" fill="url(#lysonBg)" />
+      <circle cx="32" cy="25" r="9" fill="url(#lysonSun)" />
+      <path
+        d="M14 41c4.5 0 4.5-3.4 9-3.4S27.5 41 32 41s4.5-3.4 9-3.4S45.5 41 50 41"
+        stroke="#ecfeff"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        opacity="0.9"
+      />
+      <path
+        d="M12 50c5 0 5-3.6 10-3.6S27 50 32 50s5-3.6 10-3.6S47 50 52 50"
+        stroke="#ecfeff"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+      <path d="M22 38l10-15 10 15z" fill="#083144" opacity="0.28" />
+    </svg>
+  );
+}

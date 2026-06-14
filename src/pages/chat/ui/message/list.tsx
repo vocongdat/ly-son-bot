@@ -15,10 +15,13 @@ export default function MessageList({ messages }: MessageListProps) {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (container) {
-      const heightContainer = container.offsetHeight;
-      setHeightContainer(heightContainer);
-    }
+    if (!container) return;
+
+    const measure = () => setHeightContainer(container.offsetHeight);
+    measure();
+
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
   }, []);
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function MessageList({ messages }: MessageListProps) {
   }, [messages.length]);
 
   return (
-    <div className="min-h-full flex-1 pr-4" ref={containerRef}>
+    <div className="min-h-full flex-1 pr-2" ref={containerRef}>
       <Virtuoso
         ref={virtuosoRef}
         style={{ height: `${heightContainer}px` }}
@@ -41,9 +44,10 @@ export default function MessageList({ messages }: MessageListProps) {
         alignToBottom
         itemContent={(_, message) => (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="pb-1"
           >
             <MessageItem message={message} />
           </motion.div>
