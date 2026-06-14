@@ -22,15 +22,15 @@ export function ImagePreviewModal({
       <div className="flex flex-col items-center gap-4">
         <Image
           src={image}
-          alt="preview"
-          className="h-72 w-auto rounded object-cover"
+          alt="Xem trước ảnh"
+          className="max-h-72 w-auto overflow-hidden rounded-2xl object-cover"
         />
-        <div className="flex gap-2">
-          <Button onClick={onSend} className="w-20" disabled={isSendDisabled}>
+        <div className="flex gap-3">
+          <Button onClick={onSend} className="w-24" disabled={isSendDisabled}>
             Gửi
           </Button>
-          <Button onClick={onCancel} className="w-20" variant="secondary">
-            Hủy
+          <Button onClick={onCancel} className="w-24" variant="outline">
+            Huỷ
           </Button>
         </div>
       </div>

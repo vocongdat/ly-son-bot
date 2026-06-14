@@ -1,64 +1,76 @@
+import type { ReactNode } from 'react';
 import { cn } from '@/shared/lib/utils';
 import { Image } from '@/shared/ui/image';
 import { MessageType } from '../../model/message';
-import Avatar, { AvatarProps } from '@/shared/ui/avatar';
 
-interface MessageTemplateProps extends Omit<AvatarProps, 'className'> {
-  avatarSrc: string;
-  avatarAlt: string;
+interface MessageTemplateProps {
+  avatar: ReactNode;
   content: string;
   senderLabel: string;
   timestamp: number | string;
   type: MessageType;
   isUser?: boolean;
   bubbleClassName?: string;
-  avatarClassName?: string;
 }
 
+const formatTime = (timestamp: number | string) =>
+  new Date(timestamp).toLocaleTimeString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
 const MessageTemplate = ({
-  avatarSrc,
-  avatarAlt,
+  avatar,
   isUser = false,
   senderLabel,
   content,
   type,
   timestamp,
-  avatarClassName,
   bubbleClassName,
 }: MessageTemplateProps) => {
   const isTypeText = type === MessageType.Text;
+
   return (
     <div
-      className={cn('flex items-end gap-2', {
+      className={cn('flex items-end gap-2.5', {
         'flex-row-reverse': isUser,
       })}
     >
-      <Avatar
-        avatarSrc={avatarSrc}
-        avatarAlt={avatarAlt}
-        className={avatarClassName}
-      />
+      <div className="mb-1 shrink-0">{avatar}</div>
+
       <div
         className={cn(
-          'mb-3 max-w-xs space-y-1 rounded-lg px-3 py-2 shadow',
+          'mb-3 max-w-[min(78%,22rem)] space-y-1.5 rounded-2xl px-4 py-2.5 shadow-soft',
+          isUser ? 'rounded-br-md' : 'rounded-bl-md',
           {
-            'min-w-40': isTypeText,
+            'min-w-32': isTypeText,
           },
           bubbleClassName
         )}
       >
-        <div className="text-sm font-semibold">{senderLabel}</div>
+        <div className="text-[0.7rem] font-semibold uppercase tracking-wide opacity-70">
+          {senderLabel}
+        </div>
+
         {isTypeText ? (
-          <div className="text-lg">{content}</div>
+          <p className="whitespace-pre-wrap break-words text-[0.95rem] leading-relaxed">
+            {content}
+          </p>
         ) : (
           <Image
             src={content}
-            alt="User upload"
-            className="h-28 max-w-44 rounded"
+            alt="Hình ảnh"
+            className="h-36 max-w-52 overflow-hidden rounded-xl"
           />
         )}
-        <div className="text-right text-xs text-gray-600">
-          {new Date(timestamp).toLocaleTimeString()}
+
+        <div
+          className={cn(
+            'text-right text-[0.65rem] tabular-nums opacity-60',
+            isUser ? 'text-primary-foreground' : 'text-muted-foreground'
+          )}
+        >
+          {formatTime(timestamp)}
         </div>
       </div>
     </div>

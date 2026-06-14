@@ -13,6 +13,7 @@ export default function AppRouter() {
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path={APP_PATHS.root} element={<MainLayout />}>
+          <Route index element={<HomePage />} />
           <Route path={APP_PATHS.home} element={<HomePage />} />
           <Route path={APP_PATHS.chat} element={<ChatPage />} />
           <Route path={APP_PATHS.notFound} element={<NotFoundPage />} />

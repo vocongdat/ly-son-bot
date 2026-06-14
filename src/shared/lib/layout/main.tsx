@@ -1,11 +1,21 @@
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { useTheme } from '@/shared/lib/theme';
 
 export default function MainLayout() {
+  const { theme } = useTheme();
+
   return (
-    <div className="h-screen w-screen overflow-hidden bg-background text-foreground">
+    <div className="min-h-[100dvh] bg-background text-foreground">
       <Outlet />
-      <Toaster />
+      <Toaster
+        theme={theme}
+        position="top-center"
+        richColors
+        toastOptions={{
+          className: 'rounded-xl border border-border shadow-elevated',
+        }}
+      />
     </div>
   );
 }
